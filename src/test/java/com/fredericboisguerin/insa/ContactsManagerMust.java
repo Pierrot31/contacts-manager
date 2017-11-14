@@ -1,14 +1,15 @@
 package com.fredericboisguerin.insa;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class ContactsManagerMust {
 
@@ -31,7 +32,7 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void list_one_contact_without_email_nor_phone_number() throws InvalidEmailException, InvalidContactNameException {
+    public void list_one_contact_without_email_nor_phone_number() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String noEmail = null;
         String noPhoneNumber = null;
@@ -43,7 +44,7 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void list_one_contact_without_email() throws InvalidEmailException, InvalidContactNameException {
+    public void list_one_contact_without_email() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String noEmail = null;
         contactsManager.addContact(NICOLE_FERRONI_NAME, noEmail, NICOLE_FERRONI_PHONE_NUMBER);
@@ -55,7 +56,7 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void list_one_contact_without_phone_number() throws InvalidEmailException, InvalidContactNameException {
+    public void list_one_contact_without_phone_number() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String noPhoneNumber = null;
         contactsManager.addContact(NICOLE_FERRONI_NAME, NICOLE_FERRONI_EMAIL, noPhoneNumber);
@@ -67,7 +68,7 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void list_one_added_contact() throws InvalidEmailException, InvalidContactNameException {
+    public void list_one_added_contact() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         contactsManager.addContact(NICOLE_FERRONI_NAME, NICOLE_FERRONI_EMAIL, NICOLE_FERRONI_PHONE_NUMBER);
 
@@ -78,9 +79,17 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void list_two_added_contacts() throws InvalidEmailException, InvalidContactNameException {
+    public void list_two_added_contacts() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
-        contactsManager.addContact(NICOLE_FERRONI_NAME, NICOLE_FERRONI_EMAIL, NICOLE_FERRONI_PHONE_NUMBER);
+        try {
+            contactsManager.addContact(NICOLE_FERRONI_NAME, NICOLE_FERRONI_EMAIL, NICOLE_FERRONI_PHONE_NUMBER);
+        } catch (InvalidContactNameException e) {
+            e.printStackTrace();
+        } catch (InvalidEmailException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         contactsManager.addContact(GUILLAUME_MEURICE_NAME, GUILLAUME_MEURICE_EMAIL, GUILLAUME_MEURICE_PHONE_NUMBER);
 
         contactsManager.printAllContacts();
@@ -93,7 +102,7 @@ public class ContactsManagerMust {
     }
 
     @Test
-    public void retrieve_a_contact_from_its_name() throws InvalidEmailException, InvalidContactNameException {
+    public void retrieve_a_contact_from_its_name() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
 
         contactsManager.addContact(NICOLE_FERRONI_NAME, NICOLE_FERRONI_EMAIL, NICOLE_FERRONI_PHONE_NUMBER);

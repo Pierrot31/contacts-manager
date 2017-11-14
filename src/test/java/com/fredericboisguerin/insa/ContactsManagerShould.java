@@ -2,6 +2,8 @@ package com.fredericboisguerin.insa;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class ContactsManagerShould {
 
     private static final String SOME_VALID_EMAIL = "toto@titi.fr";
@@ -9,7 +11,7 @@ public class ContactsManagerShould {
     private static final String SOME_VALID_NAME = "Toto titi";
 
     @Test(expected = InvalidContactNameException.class)
-    public void fail_if_no_name() throws InvalidContactNameException, InvalidEmailException {
+    public void fail_if_no_name() throws InvalidContactNameException, InvalidEmailException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String noName = null;
 
@@ -17,7 +19,7 @@ public class ContactsManagerShould {
     }
 
     @Test(expected = InvalidContactNameException.class)
-    public void fail_if_name_is_empty() throws InvalidEmailException, InvalidContactNameException {
+    public void fail_if_name_is_empty() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String emptyName = "";
 
@@ -25,7 +27,7 @@ public class ContactsManagerShould {
     }
 
     @Test(expected = InvalidEmailException.class)
-    public void fail_if_email_is_not_valid() throws InvalidEmailException, InvalidContactNameException {
+    public void fail_if_email_is_not_valid() throws InvalidEmailException, InvalidContactNameException, IOException {
         ContactsManager contactsManager = new ContactsManager();
         String invalidEmail = "tototitifr";
 

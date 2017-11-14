@@ -33,14 +33,18 @@ public class Contact {
         return chaine_retour;
     }
 
-    public void modifyName(String name){
-        this.name = name;
+    public String modifyName(){
+        return this.name;
     }
-    public void modifyemail(String email){
-        this.email = email;
+    public String modifyemail(){
+        return this.email;
     }
-    public void modifyPhoneNumber(String phoneNumber){
-        this.phoneNumber = phoneNumber;
+    public String modifyPhoneNumber(){
+        return this.phoneNumber;
+    }
+    public String[] savetoCsvFormat(){
+        return new String[]{this.name + "," + this.email + "," + this.phoneNumber};
+
     }
 
 }

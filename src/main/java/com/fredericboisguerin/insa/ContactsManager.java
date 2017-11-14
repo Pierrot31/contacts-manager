@@ -1,27 +1,28 @@
 package com.fredericboisguerin.insa;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class ContactsManager {
     private Contact nouveaucontact;
     private Contact parcourir;
     private Pattern pattern;
 
-    public ArrayList<Contact> listofcontact = new ArrayList<Contact>();
+    public ArrayList<Contact> listofcontact;
 
     public ContactsManager() {
         listofcontact = new ArrayList<Contact>();
     }
 
-    public void addContact(String name, String email, String phoneNumber) throws InvalidContactNameException, InvalidEmailException {
+    public void addContact(String name, String email, String phoneNumber) throws InvalidContactNameException, InvalidEmailException, IOException {
         if (name == null) {
             throw new InvalidContactNameException("le contact n'a pas de nom!!!");
         }
         if (name == "") {
             throw new InvalidContactNameException("l'espace vide n'est pas un nom");
         }
-
         if (email != null) {
             String verifemail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}$";
             Pattern pattern = Pattern.compile(verifemail);
@@ -31,8 +32,10 @@ public class ContactsManager {
             }
         }
         Contact newcontact = new Contact(name, email, phoneNumber);
+
         if (listofcontact.isEmpty()) {
             listofcontact.add(0, newcontact);
+
         } else {
             listofcontact.add(newcontact);
         }
@@ -52,25 +55,15 @@ public class ContactsManager {
         boolean vraiSiTrouveAuMoinsUnContact = false;
 
         for (Contact courant : listofcontact) {
-
             String nomAcompare = courant.name;
-
             nomAcompare = nomAcompare.toLowerCase();
-
             if (nomAcompare.contains(name)) {
-
                 System.out.println(courant.toString());
-
                 vraiSiTrouveAuMoinsUnContact = true;
-
             }
-
         }
-
         if (!vraiSiTrouveAuMoinsUnContact) {
-
             System.out.println("Aucun contact trouvé");
-
         }
 
     }
