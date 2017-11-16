@@ -6,9 +6,6 @@ import java.util.regex.Pattern;
 
 
 public class ContactsManager {
-    private Contact nouveaucontact;
-    private Contact parcourir;
-    private Pattern pattern;
 
     public ArrayList<Contact> listofcontact;
 
@@ -67,5 +64,48 @@ public class ContactsManager {
         }
 
     }
+    public void removeContactByName(int index){
+        this.listofcontact.remove(index);
+    }
+    public void modifyContactByName(String name, String newName, String newEmail, String newPhoneNumber) throws InvalidContactNameException, InvalidEmailException {
+        boolean vraiSiTrouveAuMoinsUnContact =  false;
+        for( Contact courant : this.listofcontact){
+            String nomAcompare = courant.modifyName();
+            nomAcompare = nomAcompare.toLowerCase();
+             if( nomAcompare.contains(name)){
+               if(newName =="identique"){
+                   newName = courant.modifyName();
+                 }
+                if(newEmail=="identique"){
+                  newEmail = courant.modifyemail();
+                }
+                if(newPhoneNumber == "identique"){
+                   newPhoneNumber = courant.modifyPhoneNumber();
+                }
+                if (newEmail == null) {
+                     throw new InvalidContactNameException("Le champ nom est null!!!");
+                }
+                if (newEmail == "") {
+                  throw new InvalidContactNameException("Le champ nom est vide!!!");
+                }
+               if (null != newEmail) {
+                   String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}$";
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(newEmail);
+                   if (!matcher.matches()) {
+                       throw new InvalidEmailException("Email not valid!!!");
+                  }
+                }
+               System.out.println(courant.toString());
+               courant.modifyContact(newName, newEmail, newPhoneNumber);
+               vraiSiTrouveAuMoinsUnContact = true;
+            }
+        }
+        if(!vraiSiTrouveAuMoinsUnContact){
+             System.out.println("Le contact que vous voulez modifier n'existe pas!!!");
+        }
+    }
+
 }
+
 
